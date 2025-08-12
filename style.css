@@ -1,0 +1,1032 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 30px;
+  text-align: center;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+header h1 {
+  color: #4CAF50;
+  font-size: 2.5em;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+header p {
+  color: #666;
+  font-size: 1.1em;
+  margin-bottom: 20px;
+}
+
+#user-panel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.user-info {
+  background: #4CAF50;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+nav {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 15px;
+  margin-bottom: 30px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(31, 38, 135, 0.2);
+}
+
+nav a {
+  display: inline-block;
+  padding: 12px 24px;
+  margin: 5px;
+  background: linear-gradient(45deg, #4CAF50, #45a049);
+  color: white;
+  text-decoration: none;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+nav a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+nav a.active {
+  background: linear-gradient(45deg, #FF6B6B, #ee5a52);
+  transform: scale(1.05);
+}
+
+section {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  display: none;
+}
+
+section.active {
+  display: block;
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+h2 {
+  color: #4CAF50;
+  margin-bottom: 20px;
+  font-size: 1.8em;
+  text-align: center;
+}
+
+form {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+input[type="text"], 
+input[type="email"], 
+input[type="password"], 
+input[type="file"], 
+input[type="tel"],
+textarea {
+  width: 100%;
+  padding: 15px;
+  margin: 10px 0;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+  font-family: inherit;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+input[type="text"]:focus, 
+input[type="email"]:focus, 
+input[type="password"]:focus,
+input[type="tel"]:focus,
+textarea:focus {
+  outline: none;
+  border-color: #4CAF50;
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.2);
+}
+
+button {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(45deg, #4CAF50, #45a049);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.logout-btn {
+  background: linear-gradient(45deg, #FF6B6B, #ee5a52);
+  width: auto;
+  padding: 8px 16px;
+  font-size: 14px;
+}
+
+#lista-libros {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  list-style: none;
+}
+
+.libro-item {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-radius: 15px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.libro-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+
+.libro-item h3 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.libro-item .autor {
+  color: #666;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.libro-item .descripcion {
+  color: #777;
+  font-size: 0.9em;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.libro-item .fecha {
+  color: #666;
+  font-size: 0.9em;
+  margin-bottom: 15px;
+}
+
+.libro-item .subido-por {
+  color: #888;
+  font-size: 0.8em;
+  margin-bottom: 15px;
+}
+
+.libro-item .link-info {
+  color: #4CAF50;
+  font-size: 0.9em;
+  margin-bottom: 10px;
+}
+
+.libro-item .link-info a {
+  color: #4CAF50;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.libro-item .link-info a:hover {
+  text-decoration: underline;
+}
+
+.libro-item .content-info {
+  color: #667eea;
+  font-size: 0.9em;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+/* Botones de acción para libros */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.action-buttons button {
+  width: auto;
+  padding: 8px 16px;
+  font-size: 14px;
+  margin: 0;
+  border-radius: 8px;
+  min-width: 100px;
+}
+
+.edit-btn {
+  background: linear-gradient(45deg, #667eea, #764ba2) !important;
+  color: white;
+}
+
+.edit-btn:hover {
+  background: linear-gradient(45deg, #5a6fd8, #6a42a6) !important;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.delete-btn {
+  background: linear-gradient(45deg, #FF6B6B, #ee5a52) !important;
+  color: white;
+}
+
+.delete-btn:hover {
+  background: linear-gradient(45deg, #ff5555, #e04848) !important;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+}
+
+/* Botón de cancelar edición */
+.cancel-btn {
+  background: linear-gradient(45deg, #95a5a6, #7f8c8d) !important;
+  color: white;
+  margin-top: 15px;
+}
+
+.cancel-btn:hover {
+  background: linear-gradient(45deg, #8b9799, #6c7b7d) !important;
+  box-shadow: 0 4px 15px rgba(149, 165, 166, 0.4);
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 30px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.error {
+  color: #FF6B6B;
+  text-align: center;
+  margin: 10px 0;
+  padding: 10px;
+  background: rgba(255, 107, 107, 0.1);
+  border-radius: 5px;
+}
+
+.success {
+  color: #4CAF50;
+  text-align: center;
+  margin: 10px 0;
+  padding: 10px;
+  background: rgba(76, 175, 80, 0.1);
+  border-radius: 5px;
+}
+
+/* Progress Bar */
+.progress-bar {
+  width: 100%;
+  height: 20px;
+  background: #f0f0f0;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 15px 0;
+}
+
+#progress-fill {
+  height: 100%;
+  background: linear-gradient(45deg, #4CAF50, #45a049);
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+#progress-text {
+  text-align: center;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+  
+  header h1 {
+    font-size: 2em;
+  }
+  
+  nav a {
+    display: block;
+    margin: 5px 0;
+  }
+  
+  #lista-libros {
+    grid-template-columns: 1fr;
+  }
+  
+  #user-panel {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .action-buttons button {
+    width: 100%;
+  }
+}
+
+/* Loading Animation */
+.loading {
+  text-align: center;
+  padding: 20px;
+}
+
+.loading::after {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #4CAF50;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-left: 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Estilos para Buzón de Sugerencias */
+input[type="radio"] {
+  width: auto;
+  margin: 0;
+  padding: 0;
+  accent-color: #4CAF50;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-radius: 15px;
+  padding: 20px;
+  min-width: 120px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+}
+
+.stat-number {
+  font-size: 2em;
+  font-weight: bold;
+  color: #4CAF50;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  font-size: 0.9em;
+  color: #666;
+  font-weight: 500;
+}
+
+/* Estilos para notificaciones */
+.notification-toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  color: white;
+  padding: 15px 20px;
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(76, 175, 80, 0.3);
+  z-index: 1000;
+  animation: slideIn 0.3s ease-out;
+  max-width: 300px;
+  word-wrap: break-word;
+}
+
+.notification-toast.hide {
+  animation: slideOut 0.3s ease-in forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* Estilos mejorados para formularios */
+label {
+  color: #333;
+  font-weight: 500;
+}
+
+fieldset {
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 15px 0;
+}
+
+legend {
+  color: #4CAF50;
+  font-weight: bold;
+  padding: 0 10px;
+}
+
+/* Nuevos estilos para la sección "Acerca de" */
+.about-intro {
+  margin-bottom: 30px;
+}
+
+.commitment-section,
+.target-audience-section {
+  margin: 30px 0;
+}
+
+.commitment-section h3,
+.target-audience-section h3 {
+  font-size: 1.3em;
+  margin: 20px 0;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Estilos para las listas con puntos personalizados */
+.commitment-section ul li,
+.target-audience-section ul li {
+  font-size: 1em;
+  line-height: 1.6;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  padding: 8px 25px 8px 25px;
+  margin: 8px 0;
+}
+
+.commitment-section ul li:hover,
+.target-audience-section ul li:hover {
+  background-color: rgba(76, 175, 80, 0.1);
+  transform: translateX(5px);
+}
+
+.target-audience-section ul li:hover {
+  background-color: rgba(102, 126, 234, 0.1);
+}
+
+/* Efecto hover para las secciones de información */
+.commitment-section > div,
+.target-audience-section > div {
+  transition: all 0.3s ease;
+}
+
+.commitment-section > div:hover,
+.target-audience-section > div:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+/* Animación para las secciones principales del "acerca de" */
+.about-intro,
+.commitment-section,
+.target-audience-section {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.commitment-section {
+  animation-delay: 0.2s;
+}
+
+.target-audience-section {
+  animation-delay: 0.4s;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Estilos responsivos para las nuevas secciones */
+@media (max-width: 768px) {
+  .commitment-section ul li,
+  .target-audience-section ul li {
+    padding-left: 20px;
+    font-size: 0.95em;
+  }
+  
+  .commitment-section h3,
+  .target-audience-section h3 {
+    font-size: 1.2em;
+  }
+  
+  .commitment-section > div,
+  .target-audience-section > div {
+    padding: 20px;
+    margin: 15px 0;
+  }
+}
+
+/* Estilos para la sección del equipo */
+.team-section {
+  margin: 40px 0;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.team-member {
+  background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+  border-radius: 20px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.15);
+  border: 2px solid rgba(255, 107, 107, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.team-member:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(255, 107, 107, 0.25);
+  border-color: rgba(255, 107, 107, 0.3);
+}
+
+.team-member::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255, 107, 107, 0.1), transparent);
+  transform: rotate(45deg);
+  transition: all 0.6s ease;
+  opacity: 0;
+}
+
+.team-member:hover::before {
+  opacity: 1;
+  top: -60%;
+  left: -60%;
+}
+
+.member-avatar {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #FF6B6B, #ee5a52);
+  border-radius: 50%;
+  margin: 0 auto 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+  position: relative;
+  z-index: 2;
+}
+
+.avatar-initial {
+  color: white;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+.team-member h4 {
+  color: #333;
+  font-size: 1.3em;
+  margin: 15px 0 8px 0;
+  font-weight: 600;
+  position: relative;
+  z-index: 2;
+}
+
+.member-role {
+  color: #FF6B6B;
+  font-weight: bold;
+  font-size: 1.1em;
+  margin: 8px 0;
+  position: relative;
+  z-index: 2;
+}
+
+.member-description {
+  color: #666;
+  font-size: 0.95em;
+  line-height: 1.5;
+  margin-top: 12px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Diferentes colores para cada miembro del equipo */
+.team-member:nth-child(1) {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-color: rgba(59, 130, 246, 0.1);
+}
+
+.team-member:nth-child(1) .member-avatar {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+.team-member:nth-child(1) .member-role {
+  color: #3b82f6;
+}
+
+.team-member:nth-child(1):hover {
+  box-shadow: 0 15px 35px rgba(59, 130, 246, 0.25);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.team-member:nth-child(2) {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-color: rgba(34, 197, 94, 0.1);
+}
+
+.team-member:nth-child(2) .member-avatar {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+}
+
+.team-member:nth-child(2) .member-role {
+  color: #22c55e;
+}
+
+.team-member:nth-child(2):hover {
+  box-shadow: 0 15px 35px rgba(34, 197, 94, 0.25);
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.team-member:nth-child(3) {
+  background: linear-gradient(135deg, #fefbff 0%, #f3e8ff 100%);
+  border-color: rgba(147, 51, 234, 0.1);
+}
+
+.team-member:nth-child(3) .member-avatar {
+  background: linear-gradient(135deg, #9333ea, #7c3aed);
+  box-shadow: 0 4px 15px rgba(147, 51, 234, 0.3);
+}
+
+.team-member:nth-child(3) .member-role {
+  color: #9333ea;
+}
+
+.team-member:nth-child(3):hover {
+  box-shadow: 0 15px 35px rgba(147, 51, 234, 0.25);
+  border-color: rgba(147, 51, 234, 0.3);
+}
+
+.team-member:nth-child(4) {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border-color: rgba(245, 158, 11, 0.1);
+}
+
+.team-member:nth-child(4) .member-avatar {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+}
+
+.team-member:nth-child(4) .member-role {
+  color: #f59e0b;
+}
+
+.team-member:nth-child(4):hover {
+  box-shadow: 0 15px 35px rgba(245, 158, 11, 0.25);
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+/* Responsive para la sección del equipo */
+@media (max-width: 768px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .team-member {
+    padding: 20px;
+  }
+  
+  .member-avatar {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .avatar-initial {
+    font-size: 1.3em;
+  }
+  
+  .team-member h4 {
+    font-size: 1.2em;
+  }
+  
+  .member-role {
+    font-size: 1em;
+  }
+  
+  .member-description {
+    font-size: 0.9em;
+  }
+}
+
+.member-photo {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 15px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+}
+
+.team-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.team-photo:hover {
+  transform: scale(1.1);
+}
+
+/* Fallback para cuando no carga la imagen */
+.member-avatar.fallback {
+  display: none;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #FF6B6B, #ee5a52);
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+/* Mostrar fallback cuando la imagen no carga */
+.team-photo.error + .member-avatar.fallback {
+  display: flex;
+}
+
+/* Diferentes colores para los avatares de cada miembro */
+.team-member:nth-child(1) .member-avatar.fallback {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.team-member:nth-child(2) .member-avatar.fallback {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+
+.team-member:nth-child(3) .member-avatar.fallback {
+  background: linear-gradient(135deg, #9333ea, #7c3aed);
+}
+
+.team-member:nth-child(4) .member-avatar.fallback {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+/* Responsive para fotos */
+@media (max-width: 768px) {
+  .member-photo {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+/* Logo en el header principal */
+.logo-container {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.app-logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
+  background: white;
+  padding: 5px;
+}
+
+.app-logo:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+}
+
+/* Logo en las secciones de login/registro */
+.login-logo {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.section-logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.25);
+  background: white;
+  padding: 3px;
+  transition: all 0.3s ease;
+}
+
+.section-logo:hover {
+  transform: rotate(5deg) scale(1.1);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.35);
+}
+
+/* Logo en el footer */
+.footer-logo {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.footer-logo-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2px;
+  transition: all 0.3s ease;
+}
+
+.footer-logo-img:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+/* Animación de entrada para los logos */
+@keyframes logoFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.app-logo,
+.section-logo,
+.footer-logo-img {
+  animation: logoFadeIn 0.6s ease-out;
+}
+
+/* Responsive para logos */
+@media (max-width: 768px) {
+  .app-logo {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .section-logo {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .footer-logo-img {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+/* Efecto especial para el logo principal */
+.logo-container::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: pulse 3s infinite;
+  z-index: -1;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.3;
+  }
+}
+
+/* Mejorar el header con el logo */
+header {
+  position: relative;
+  overflow: hidden;
+}
+
+header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(102, 126, 234, 0.05), transparent);
+  animation: shimmer 6s infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmer {
+  0%, 100% { transform: translateX(-100%); }
+  50% { transform: translateX(100%); }
+}

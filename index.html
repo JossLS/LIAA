@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LIA BibliotecApp</title>
+  
+  <!-- Favicon - Agregar estas líneas -->
+  <link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="icon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="icon-192.png">
+  <link rel="shortcut icon" href="favicon.ico">
+  
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <!-- Logo agregado aquí -->
+      <div class="logo-container">
+        <img src="icon-128.png" alt="LIA Logo" class="app-logo">
+      </div>
+      
+      <h1>LIA BibliotecApp</h1>
+      <p>Tu rincón para leer, aprender y compartir libros en PDF</p>
+      <div id="user-panel"></div>
+      
+      <!-- Botón para habilitar notificaciones -->
+      <div id="notification-panel" class="hidden" style="margin-top: 15px;">
+        <button id="enable-notifications" onclick="solicitarPermisosNotificacion()" style="background: linear-gradient(45deg, #FF6B6B, #ee5a52); padding: 8px 16px; font-size: 14px; width: auto;">
+          🔔 Habilitar Notificaciones
+        </button>
+      </div>
+    </header>
+    
+    <nav id="main-nav" class="hidden">
+      <a href="#" onclick="showSection('acerca')" id="nav-acerca">Acerca de</a>
+      <a href="#" onclick="showSection('biblioteca')" id="nav-biblioteca">Biblioteca</a>
+      <a href="#" onclick="showSection('subir')" id="nav-subir">Subir Libro</a>
+      <a href="#" onclick="showSection('buzon')" id="nav-buzon">Buzón</a>
+    </nav>
+
+    <main>
+      <!-- Sección de Login -->
+      <section id="login" class="active">
+        <div class="login-logo">
+          <img src="icon-96.png" alt="LIA Logo" class="section-logo">
+        </div>
+        <h2>Iniciar Sesión</h2>
+        <form id="form-login">
+          <input type="email" name="email" placeholder="Correo electrónico" required>
+          <input type="password" name="password" placeholder="Contraseña" required>
+          <button type="submit">Entrar</button>
+        </form>
+        <div id="login-error"></div>
+        
+        <div style="text-align: center; margin-top: 20px;">
+          <p>¿No tienes cuenta? <a href="#" onclick="showRegister()" style="color: #4CAF50; text-decoration: none;">Regístrate aquí</a></p>
+        </div>
+      </section>
+
+      <!-- Sección de Registro -->
+      <section id="register">
+        <div class="login-logo">
+          <img src="icon-96.png" alt="LIA Logo" class="section-logo">
+        </div>
+        <h2>Crear Cuenta</h2>
+        <form id="form-register">
+          <input type="text" name="nombre" placeholder="Nombre completo" required>
+          <input type="email" name="email" placeholder="Correo electrónico" required>
+          <input type="password" name="password" placeholder="Contraseña (mín. 6 caracteres)" required>
+          <button type="submit">Registrarse</button>
+        </form>
+        <div id="register-error"></div>
+        
+        <div style="text-align: center; margin-top: 20px;">
+          <p>¿Ya tienes cuenta? <a href="#" onclick="showLogin()" style="color: #4CAF50; text-decoration: none;">Inicia sesión</a></p>
+        </div>
+      </section>
+
+      <!-- Sección Acerca de -->
+      <section id="acerca">
+        <h2>Acerca de la App</h2>
+        
+        <!-- Descripción principal -->
+        <div class="about-intro">
+          <p style="text-align: center; font-size: 1.1em; line-height: 1.8; margin-bottom: 30px;">
+            BibliotecApp es una aplicación web inspirada en el <strong>ODS 4</strong> de la ONU, cuyo objetivo es promover el acceso a la lectura infantil de forma digital. Aquí los usuarios pueden leer libros infantiles en PDF o subir los suyos para compartirlos con otros.
+          </p>
+        </div>
+
+        <!-- Características principales -->
+        <div style="margin: 30px 0; text-align: center;">
+          <div style="display: inline-block; padding: 20px; background: linear-gradient(135deg, #4CAF50, #45a049); color: white; border-radius: 15px; margin: 10px;">
+            <h3>📚 Lectura Digital</h3>
+            <p>Acceso fácil a libros infantiles</p>
+          </div>
+          <div style="display: inline-block; padding: 20px; background: linear-gradient(135deg, #FF6B6B, #ee5a52); color: white; border-radius: 15px; margin: 10px;">
+            <h3>🌍 ODS 4</h3>
+            <p>Educación de calidad para todos</p>
+          </div>
+          <div style="display: inline-block; padding: 20px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border-radius: 15px; margin: 10px;">
+            <h3>📤 Compartir</h3>
+            <p>Sube y comparte tus libros</p>
+          </div>
+        </div>
+
+        <!-- Nueva sección: Nuestro compromiso -->
+        <div class="commitment-section">
+          <h3 style="color: #4CAF50; text-align: center; margin: 40px 0 20px 0; font-size: 1.5em;">
+            🌱 Nuestro compromiso con la educación de calidad
+          </h3>
+          <div style="background: linear-gradient(135deg, #f8fffe 0%, #e8f5e8 100%); padding: 25px; border-radius: 15px; margin: 20px 0; border-left: 4px solid #4CAF50;">
+            <p style="line-height: 1.8; margin-bottom: 15px; text-align: justify;">
+              Nos alineamos con el <strong>ODS 4</strong> porque sabemos que la educación es la base para construir un futuro más justo, sostenible y próspero. Nuestra meta es:
+            </p>
+            <ul style="list-style: none; padding-left: 0; margin: 15px 0;">
+              <li style="margin: 10px 0; padding-left: 25px; position: relative;">
+                <span style="position: absolute; left: 0; color: #4CAF50; font-weight: bold;">•</span>
+                Democratizar el acceso a contenidos educativos.
+              </li>
+              <li style="margin: 10px 0; padding-left: 25px; position: relative;">
+                <span style="position: absolute; left: 0; color: #4CAF50; font-weight: bold;">•</span>
+                Fomentar el aprendizaje colaborativo.
+              </li>
+              <li style="margin: 10px 0; padding-left: 25px; position: relative;">
+                <span style="position: absolute; left: 0; color: #4CAF50; font-weight: bold;">•</span>
+                Despertar la curiosidad intelectual desde la infancia.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Nueva sección: Para quién es -->
+        <div class="target-audience-section">
+          <h3 style="color: #667eea; text-align: center; margin: 40px 0 20px 0; font-size: 1.5em;">
+            👧👦 Para quién es esta plataforma
+          </h3>
+          <div style="background: linear-gradient(135deg, #f8f9ff 0%, #e8ecff 100%); padding: 25px; border-radius: 15px; margin: 20px 0; border-left: 4px solid #667eea;">
+            <p style="line-height: 1.8; margin-bottom: 15px; text-align: justify;">
+              Esta herramienta está pensada especialmente para <strong>niñas, niños y jóvenes</strong>, pero también puede ser usada por:
+            </p>
+            <ul style="list-style: none; padding-left: 0; margin: 15px 0;">
+              <li style="margin: 10px 0; padding-left: 25px; position: relative;">
+                <span style="position: absolute; left: 0; color: #667eea; font-weight: bold;">•</span>
+                Docentes que quieran compartir materiales.
+              </li>
+              <li style="margin: 10px 0; padding-left: 25px; position: relative;">
+                <span style="position: absolute; left: 0; color: #667eea; font-weight: bold;">•</span>
+                Familias que busquen recursos educativos.
+              </li>
+              <li style="margin: 10px 0; padding-left: 25px; position: relative;">
+                <span style="position: absolute; left: 0; color: #667eea; font-weight: bold;">•</span>
+                Escuelas que quieran fomentar la lectura digital.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Nueva sección: Nuestro Equipo -->
+        <div class="team-section">
+          <h3 style="color: #FF6B6B; text-align: center; margin: 40px 0 20px 0; font-size: 1.5em;">
+            👥 Conoce a Nuestro Equipo
+          </h3>
+          <p style="text-align: center; margin-bottom: 30px; color: #666; font-size: 1.1em;">
+            Un grupo apasionado de profesionales comprometidos con la educación digital
+          </p>
+          
+          <div class="team-grid">
+            <div class="team-member">
+              <div class="member-photo">
+                <img src="maria-limon.jpg" alt="María Limón" class="team-photo">
+                <!-- Fallback en caso de que no cargue la foto -->
+                <div class="member-avatar fallback">
+                  <span class="avatar-initial">ML</span>
+                </div>
+              </div>
+              <h4>María Limón</h4>
+              <p class="member-role">📱 Desarrolladora Móvil</p>
+              <p class="member-description">Especializada en crear experiencias móviles intuitivas y accesibles para todos los usuarios.</p>
+            </div>
+            
+            <div class="team-member">
+              <div class="member-photo">
+                <img src="jocelyn-llanes.jpg" alt="Jocelyn Llanes" class="team-photo">
+                <div class="member-avatar fallback">
+                  <span class="avatar-initial">JL</span>
+                </div>
+              </div>
+              <h4>Jocelyn Llanes</h4>
+              <p class="member-role">🌐 Desarrolladora Web</p>
+              <p class="member-description">Experta en desarrollo web moderno, enfocada en crear interfaces atractivas y funcionales.</p>
+            </div>
+            
+            <div class="team-member">
+              <div class="member-photo">
+                <img src="mauricio-esparza.jpg" alt="Mauricio Esparza" class="team-photo">
+                <div class="member-avatar fallback">
+                  <span class="avatar-initial">ME</span>
+                </div>
+              </div>
+              <h4>Mauricio Esparza</h4>
+              <p class="member-role">🎮 Desarrollador de Videojuegos</p>
+              <p class="member-description">Creador de experiencias interactivas que hacen del aprendizaje una aventura divertida.</p>
+            </div>
+            
+            <div class="team-member">
+              <div class="member-photo">
+                <img src="alejandro-rodriguez.jpg" alt="Alejandro Rodríguez" class="team-photo">
+                <div class="member-avatar fallback">
+                  <span class="avatar-initial">AR</span>
+                </div>
+              </div>
+              <h4>Alejandro Rodríguez</h4>
+              <p class="member-role">📋 Documentación y Planeación</p>
+              <p class="member-description">Encargado de la estrategia, documentación y coordinación de proyectos educativos.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mensaje final inspirador -->
+        <div style="text-align: center; margin-top: 40px; padding: 25px; background: linear-gradient(135deg, #FFE082, #FFCC02); border-radius: 15px; color: #333;">
+          <h3 style="margin-bottom: 15px; color: #F57C00;">✨ Juntos construimos un futuro educativo</h3>
+          <p style="font-style: italic; line-height: 1.6;">
+            Cada libro compartido, cada historia leída, cada sonrisa de un niño aprendiendo, nos acerca más a un mundo donde la educación de calidad sea accesible para todos.
+          </p>
+        </div>
+      </section>
+
+      <!-- Sección Biblioteca -->
+      <section id="biblioteca">
+        <h2>Biblioteca Digital</h2>
+        <div id="loading" class="hidden">
+          <p style="text-align: center;">Cargando libros...</p>
+        </div>
+        <ul id="lista-libros"></ul>
+      </section>
+
+      <!-- Sección Subir Libro -->
+      <section id="subir">
+        <h2>Sube tu propio libro</h2>
+        <form id="form-subir">
+          <input type="text" name="titulo" placeholder="Título del libro" required>
+          <input type="text" name="autor" placeholder="Autor" required>
+          <textarea name="descripcion" placeholder="Descripción (opcional)"></textarea>
+          <textarea name="contenido" placeholder="Contenido del libro (opcional si se usa enlace)"></textarea>
+          <input type="text" name="link" placeholder="Enlace al libro (PDF en línea, opcional si se usa contenido)">
+          <button type="submit">Subir</button>
+          <div id="subir-mensaje"></div>
+        </form>
+      </section>
+
+      <!-- Sección Buzón de Sugerencias -->
+      <section id="buzon">
+        <h2>📮 Buzón de Sugerencias y Quejas</h2>
+        <p style="text-align: center; margin-bottom: 30px; color: #666;">
+          Tu opinión es muy importante para nosotros. Compártenos tus ideas para mejorar la plataforma.
+        </p>
+        
+        <form id="form-buzon">
+          <input type="text" name="nombre" placeholder="Tu nombre completo" required>
+          <input type="email" name="correo" placeholder="Tu correo electrónico" required>
+          <input type="tel" name="telefono" placeholder="Tu número de teléfono (opcional)">
+          
+          <div style="margin: 15px 0;">
+            <label style="display: block; margin-bottom: 10px; font-weight: bold; color: #4CAF50;">
+              Tipo de mensaje:
+            </label>
+            <div style="display: flex; gap: 20px; justify-content: center;">
+              <label style="display: flex; align-items: center; cursor: pointer;">
+                <input type="radio" name="tipo" value="sugerencia" required style="margin-right: 8px;">
+                💡 Sugerencia
+              </label>
+              <label style="display: flex; align-items: center; cursor: pointer;">
+                <input type="radio" name="tipo" value="queja" required style="margin-right: 8px;">
+                😟 Queja  
+              </label>
+              <label style="display: flex; align-items: center; cursor: pointer;">
+                <input type="radio" name="tipo" value="felicitacion" required style="margin-right: 8px;">
+                😊 Felicitación
+              </label>
+            </div>
+          </div>
+          
+          <textarea name="mensaje" placeholder="Escribe tu mensaje aquí..." rows="6" required></textarea>
+          
+          <button type="submit">📤 Enviar Mensaje</button>
+        </form>
+        <div id="buzon-mensaje"></div>
+        
+        <!-- Estadísticas del buzón -->
+        <div id="buzon-stats" style="margin-top: 30px; text-align: center;">
+          <h3 style="color: #4CAF50; margin-bottom: 15px;">📊 Estadísticas</h3>
+          <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+            <div class="stat-card">
+              <div class="stat-number" id="total-mensajes">0</div>
+              <div class="stat-label">Total Mensajes</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" id="total-sugerencias">0</div>
+              <div class="stat-label">Sugerencias</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" id="total-quejas">0</div>
+              <div class="stat-label">Quejas</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" id="total-felicitaciones">0</div>
+              <div class="stat-label">Felicitaciones</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-logo">
+        <img src="icon-72.png" alt="LIA Logo" class="footer-logo-img">
+      </div>
+      &copy; 2025 LinguaTech Kids | Proyecto educativo basado en ODS 4
+    </footer>
+  </div>
+
+  <script src="firebase_config.js"></script>
+  <script src="script.js"></script>
+  
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service_worker.js')
+        .then(reg => console.log('SW registrado', reg))
+        .catch(err => console.error('SW falló', err));
+    }
+  </script>
+</body>
+</html>
