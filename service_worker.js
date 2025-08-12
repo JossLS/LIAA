@@ -1,11 +1,11 @@
 const CACHE_NAME = 'lia-bibliotecapp-v1.0.0';
 const STATIC_CACHE_URLS = [
   '/',
-  '/index.html',
-  '/style.css',
-  '/script.js',
-  '/firebase_config.js',
-  '/manifest.json',
+  'index.html',
+  'style.css',
+  'script.js',
+  'firebase_config.js',
+  'manifest.json',
   'https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js',
   'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js',
   'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js',
